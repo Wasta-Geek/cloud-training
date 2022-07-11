@@ -10,6 +10,16 @@ services:
     networks:
       - backend
     ports:
-      - "27017:27017"
+      - "27017:40000"
+  auth-app:
+    build:
+      context: authorization-service/fast-api
+    image: ${PROJECT_NAME}/auth-app:${TAG}
+    environment:
+      - PORT=40001
+    networks:
+      - backend
+    ports:
+      - "40001:40001"
 networks:
   backend:

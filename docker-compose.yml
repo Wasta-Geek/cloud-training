@@ -4,22 +4,23 @@ services:
     build:
       context: authorization-service/mongo
     image: ${PROJECT_NAME}/auth-mongodb:${TAG}
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
     networks:
-      - backend
+      - ${NETWORK_HOST}
     ports:
-      - "27017:40000"
+      - "${MONGO_PORT}:40000"
   auth-app:
     build:
       context: authorization-service/fast-api
     image: ${PROJECT_NAME}/auth-app:${TAG}
     environment:
-      - PORT=40001
+      - PORT=${AUTH_API_PORT}
+      - MONGO_HOST=${MONGO_HOST}
+      - MONGO_PORT=${MONGO_PORT}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     networks:
-      - backend
+      - ${NETWORK_HOST}
     ports:
-      - "40001:40001"
+      - "${AUTH_API_PORT}:${AUTH_API_PORT}"
 networks:
-  backend:
+  backend_local:

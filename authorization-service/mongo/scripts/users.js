@@ -18,3 +18,5 @@ db.users.createIndex(
     {name: 1},
     {unique: true}
 );
+
+//  mongosh mongodb://auth-mongodb:27017 -u root -p root
